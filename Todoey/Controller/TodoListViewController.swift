@@ -11,11 +11,20 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        if let items = defaults.array(forKey: "TodoListArray") {
+            print("Successfully retrieved data from UserDefaults!")
+            itemArray = items as! [String]
+        } else {
+            print("Failed to retrieve data from UserDefaults!")
+        }
         
     }
     
@@ -64,6 +73,7 @@ class TodoListViewController: UITableViewController {
             if let addText = textField.text {
                 print("Successfully added new item!")
                 self.itemArray.append(addText)
+                self.defaults.set(self.itemArray, forKey: "TodoListArray")
             } else {
                 print("Text Field is empty!")
             }
