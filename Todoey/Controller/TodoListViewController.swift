@@ -10,7 +10,8 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+//    var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    var itemArray = [Item]()
     
     let defaults = UserDefaults.standard
 
@@ -18,17 +19,29 @@ class TodoListViewController: UITableViewController {
         
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
+        let newItem = Item()
+        newItem.title = "Find Mike"
+        itemArray.append(newItem)
         
-        if let items = defaults.array(forKey: "TodoListArray") {
+        let newItem2 = Item()
+        newItem2.title = "Buy Eggos"
+        itemArray.append(newItem2)
+        
+        let newItem3 = Item()
+        newItem3.title = "Destroy Demogorgon"
+        itemArray.append(newItem3)
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
             print("Successfully retrieved data from UserDefaults!")
-            itemArray = items as! [String]
+            itemArray = items
         } else {
             print("Failed to retrieve data from UserDefaults!")
         }
         
     }
     
-    //MARK - Tableview Datasource Methods
+    //MARK: Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -39,18 +52,22 @@ class TodoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let item = itemArray[indexPath.row]
         
-        cell.textLabel?.text = itemArray[indexPath.row]
+        cell.textLabel?.text = item.title
+        cell.accessoryType = item.done ? .checkmark : .none
         
         return cell
         
     }
     
-    //MARK - Tableview Delegate Methods
+    //MARK: Tableview Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("\(indexPath.row). \(itemArray[indexPath.row])") // Ex: 1. Buy Eggos
+        print("\(indexPath.row). \(itemArray[indexPath.row].title)") // Ex: 1. Buy Eggos
+        
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -62,7 +79,7 @@ class TodoListViewController: UITableViewController {
         
     }
     
-    //MARK - Add New Items
+    //MARK: Add New Items
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -72,7 +89,11 @@ class TodoListViewController: UITableViewController {
             // What will happen when User clicks on add button
             if let addText = textField.text {
                 print("Successfully added new item!")
-                self.itemArray.append(addText)
+                
+                let newItem = Item()
+                newItem.title = addText
+                self.itemArray.append(newItem)
+                
                 self.defaults.set(self.itemArray, forKey: "TodoListArray")
             } else {
                 print("Text Field is empty!")
