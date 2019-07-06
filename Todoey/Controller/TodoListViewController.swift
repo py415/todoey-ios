@@ -11,6 +11,10 @@ import CoreData
 
 class TodoListViewController: UITableViewController {
     
+    // Outlets
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    // Properties
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -19,9 +23,9 @@ class TodoListViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent("Items.plist"))
         
-        print(dataFilePath)
+        searchBar.delegate = self
         
         loadItems()
         
@@ -103,17 +107,47 @@ class TodoListViewController: UITableViewController {
         
     }
     
-    func loadItems() {
-
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
         
         do {
             itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from context \(error)")
         }
+        
+        tableView.reloadData()
 
     }
     
 }
 
+extension TodoListViewController: UISearchBarDelegate {
+    
+    // MARK: - Search bar methods
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        loadItems(with: request)
+        
+//        do {
+//            itemArray = try context.fetch(request)
+//        } catch {
+//            print("Error fetching data from context \(error)")
+//        }
+        
+    }
+    
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//
+//        searchBar.text = ""
+//        itemArray.removeAll()
+//        tableView.reloadData()
+//
+//    }
+    
+}
