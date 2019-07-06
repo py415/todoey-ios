@@ -133,21 +133,33 @@ extension TodoListViewController: UISearchBarDelegate {
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
         loadItems(with: request)
-        
-//        do {
-//            itemArray = try context.fetch(request)
-//        } catch {
-//            print("Error fetching data from context \(error)")
-//        }
+        resignKeyboard(for: searchBar)
         
     }
     
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//
-//        searchBar.text = ""
-//        itemArray.removeAll()
-//        tableView.reloadData()
-//
-//    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.text = ""
+        itemArray.removeAll()
+        loadItems()
+        resignKeyboard(for: searchBar)
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text?.count == 0 {
+            loadItems()
+        }
+        
+    }
+    
+    func resignKeyboard(for searchBar: UISearchBar) {
+        
+        DispatchQueue.main.async {
+            searchBar.resignFirstResponder()
+        }
+        
+    }
     
 }
