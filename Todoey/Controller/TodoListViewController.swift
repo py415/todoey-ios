@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
@@ -31,6 +32,7 @@ class TodoListViewController: SwipeTableViewController {
         searchBar.delegate = self
         
         tableView.rowHeight = 90
+        tableView.separatorStyle = .none
         
     }
     
@@ -49,6 +51,11 @@ class TodoListViewController: SwipeTableViewController {
         if let item = todoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.done ? .checkmark : .none
+            
+            if let color = UIColor(hexString: selectedCategory!.color)?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+                cell.backgroundColor = color
+                cell.textLabel?.textColor = UIColor.init(contrastingBlackOrWhiteColorOn: color, isFlat: true)
+            }
         } else {
             cell.textLabel?.text = "No Items Added"
         }
@@ -147,22 +154,22 @@ extension TodoListViewController: UISearchBarDelegate {
     // MARK: - Search bar methods
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-
+        
         todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
         
         
         tableView.reloadData()
         
         resignKeyboard(for: searchBar)
-
+        
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-
+        
         searchBar.text = ""
         loadItems()
         resignKeyboard(for: searchBar)
-
+        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
