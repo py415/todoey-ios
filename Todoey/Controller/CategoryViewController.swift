@@ -32,7 +32,7 @@ class CategoryViewController: SwipeTableViewController {
         
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add", style: .default) { (_) in
             
             let newCategory = Category()
             

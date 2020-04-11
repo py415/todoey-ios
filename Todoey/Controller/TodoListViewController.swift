@@ -62,7 +62,7 @@ class TodoListViewController: SwipeTableViewController {
         
         navBar.barTintColor = navBarColor
         navBar.tintColor = contrastingColor
-        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : contrastingColor]
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: contrastingColor]
         
         searchBar.barTintColor = navBarColor
         
@@ -121,7 +121,7 @@ class TodoListViewController: SwipeTableViewController {
         
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add Item", style: .default) { (_) in
             // What will happen when User clicks on add button
             if let currentCategory = self.selectedCategory {
                 do {
@@ -188,7 +188,6 @@ extension TodoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
-        
         
         tableView.reloadData()
         
