@@ -56,28 +56,6 @@ class TodoListViewController: SwipeTableViewController {
         
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//
-//        updateNavBar(withHexCode: "1D9BF6")
-//
-//    }
-    
-//    // MARK: - Nav Bar Setup Methods
-//
-//    func updateNavBar(withHexCode colorHexCode: String) {
-//
-//        guard let navBar = navigationController?.navigationBar else { fatalError("Navigation controller does not exist.") }
-//        let navBarColor = UIColor(hexString: colorHexCode)!
-//        let contrastingColor = ContrastColorOf(navBarColor, returnFlat: true)
-//
-//        navBar.backgroundColor = navBarColor
-//        navBar.tintColor = contrastingColor
-//        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: contrastingColor]
-//
-//        searchBar.barTintColor = navBarColor
-//
-//    }
-    
     // MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
