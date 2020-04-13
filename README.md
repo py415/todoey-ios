@@ -15,7 +15,12 @@ Todoey is a to-do list app to keep track of all your tasks.
 ## Product Spec
 ### User Stories
 
-- [ ] User shall be able to add a task to his to-do list.
+- [X] User shall be able to add new categories in their to-do list.
+- [X] User shall be able to remove categories from their to-do list.
+- [X] User shall be able to add tasks to a category in their to-do list.
+- [X] User shall be able to remove tasks from a category from their to-do list.
+- [X] User shall be able to mark a task completion.
+- [X] User to-do list data shall be persisted upon restarting app.
 
 ## App Walkthrough
 

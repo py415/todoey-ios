@@ -15,6 +15,10 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         
         super.viewDidLoad()
         
+        // Adjust table view settings
+        tableView.rowHeight = 90
+        tableView.separatorStyle = .none
+        
     }
     
     // MARK: - TableView Datasource Methods
@@ -29,20 +33,18 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         
     }
     
-    // MARK: - Swipe Cell Delegate Methods
+    // MARK: - SwipeCellKit Delegate Methods
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
         guard orientation == .right else { return nil }
         
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { (_, indexPath) in
-            // handle action by updating model with deletion
-            
+            // Handle action by updating model with deletion
             self.updateModel(at: indexPath)
-
         }
         
-        // customize the action appearance
+        // Customize the action appearance
         deleteAction.image = UIImage(named: "delete-icon")
         
         return [deleteAction]
@@ -60,9 +62,6 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     }
     
     func updateModel(at indexPath: IndexPath) {
-        
-        // Update our data model
-        print("Item deleted form superclass")
         
     }
     

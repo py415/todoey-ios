@@ -19,10 +19,24 @@ class CategoryViewController: SwipeTableViewController {
         
         super.viewDidLoad()
         
+        // Load categories when view loads up
         loadCategories()
         
-        tableView.rowHeight = 90
-        tableView.separatorStyle = .none
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        guard let navBar = navigationController?.navigationBar else {
+            fatalError("Navigation controller does not exist.")
+        }
+        
+        // Default navigation bar colors
+        navBar.subviews[0].backgroundColor = UIColor(hexString: "1D9BF6")
+        navBar.backgroundColor = UIColor(hexString: "1D9BF6")
+        navBar.tintColor = .white
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
     }
     
@@ -30,26 +44,27 @@ class CategoryViewController: SwipeTableViewController {
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
+        // Display alert with text field when User presses '+' navigation bar button
         var textField = UITextField()
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (_) in
-            
+            // Handle action when user presses '+' navigation bar
             let newCategory = Category()
             
             newCategory.name = textField.text!
-            newCategory.color = (UIColor.randomFlat()?.hexValue())!
+            newCategory.color = UIColor.randomFlat().hexValue()
             
             self.save(category: newCategory)
-            
+            print("Added new category: \(newCategory.name)")
         }
         
         alert.addAction(action)
-        
         alert.addTextField { (field) in
             textField = field
             textField.placeholder = "Add a new category"
         }
         
+        // Present alert
         present(alert, animated: true, completion: nil)
         
     }
@@ -68,7 +83,7 @@ class CategoryViewController: SwipeTableViewController {
         
         if let category = categories?[indexPath.row] {
             cell.textLabel?.text = category.name
-            cell.textLabel?.textColor = UIColor.init(contrastingBlackOrWhiteColorOn: UIColor(hexString: category.color), isFlat: true)
+            cell.textLabel?.textColor = ContrastColorOf(UIColor(hexString: category.color)!, returnFlat: true)
             cell.backgroundColor = UIColor(hexString: category.color)
             
         }
@@ -82,6 +97,7 @@ class CategoryViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         performSegue(withIdentifier: "goToItems", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
@@ -127,6 +143,8 @@ class CategoryViewController: SwipeTableViewController {
         
         if let categoryForDeletion = self.categories?[indexPath.row] {
             do {
+                print("Deleted category: \(categoryForDeletion.name)")
+                
                 try self.realm.write {
                     self.realm.delete(categoryForDeletion)
                 }
