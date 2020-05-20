@@ -21,7 +21,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         
     }
     
-    // MARK: - TableView Datasource Methods
+    // MARK: - UITableViewDataSource Section
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -33,7 +33,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         
     }
     
-    // MARK: - SwipeCellKit Delegate Methods
+    // MARK: - SwipeTableViewCellDelegate Section
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
@@ -61,8 +61,6 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         
     }
     
-    func updateModel(at indexPath: IndexPath) {
-        
-    }
+    func updateModel(at indexPath: IndexPath) { }
     
 }

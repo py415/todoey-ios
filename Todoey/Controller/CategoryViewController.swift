@@ -12,8 +12,10 @@ import ChameleonFramework
 
 class CategoryViewController: SwipeTableViewController {
     
-    let realm = try! Realm()
-    var categories: Results<Category>?
+    // MARK: - Properties
+    private var categories: Results<Category>?
+    
+    private let realm = try! Realm()
     
     override func viewDidLoad() {
         
@@ -69,7 +71,7 @@ class CategoryViewController: SwipeTableViewController {
         
     }
     
-    // MARK: - TableView Datasource Methods
+    // MARK: - UITableViewDataSource Section
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -92,7 +94,7 @@ class CategoryViewController: SwipeTableViewController {
         
     }
     
-    // MARK: - TableView Delegate Methods
+    // MARK: - UITableViewDelegate Section
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

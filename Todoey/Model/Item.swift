@@ -11,6 +11,7 @@ import RealmSwift
 
 class Item: Object {
     
+    // MARK: - Properties
     @objc dynamic var title: String = ""
     @objc dynamic var done: Bool = false
     @objc dynamic var dateCreated: Date?

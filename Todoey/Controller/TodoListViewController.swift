@@ -12,17 +12,18 @@ import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
     
-    // Outlets
+    // MARK: - Outlets
     @IBOutlet weak var searchBar: UISearchBar!
     
-    // Properties
-    var todoItems: Results<Item>?
-    let realm = try! Realm()
+    // MARK: - Properties
+    private var todoItems: Results<Item>?
     var selectedCategory: Category? {
         didSet {
             loadItems()
         }
     }
+    
+    private let realm = try! Realm()
     
     override func viewDidLoad() {
         
@@ -56,7 +57,7 @@ class TodoListViewController: SwipeTableViewController {
         
     }
     
-    // MARK: - Tableview Datasource Methods
+    // MARK: - UITableViewDataSource Section
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -84,7 +85,7 @@ class TodoListViewController: SwipeTableViewController {
         
     }
     
-    // MARK: - Tableview Delegate Methods
+    // MARK: - UITableViewDelegate Section
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
