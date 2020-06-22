@@ -19,14 +19,14 @@ Todoey is a to-do list app to keep track of all your tasks.
 - [X] User shall be able to remove categories from their to-do list.
 - [X] User shall be able to add tasks to a category in their to-do list.
 - [X] User shall be able to remove tasks from a category from their to-do list.
-- [X] User shall be able to mark a task completion.
-- [X] User to-do list data shall be persisted upon restarting app.
+- [X] User shall be able to mark a task as complete.
+- [X] Users to-do list shall be persisted across app restarts.
 
 ## App Walkthrough
 
 Here's a GIF of how the app works:
 
-<img src="https://user-images.githubusercontent.com/35745973/81491892-17092f80-9248-11ea-8866-009d0746bef7.gif" width=250>
+<img src="https://github.com/py415/app-resources/blob/master/ios/ios-todoey.gif" width=250>
 
 ## Libraries
 
